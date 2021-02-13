@@ -32,7 +32,7 @@ export class TasksService {
   getTaskById(id: string): Task {
     const found = this.tasks.find((t) => t.id === id);
     if (!found) {
-      throw new NotFoundException('Task not found.');
+      throw new NotFoundException(`Task with ID: "${id}" not found.`);
     }
     return found;
   }
@@ -67,6 +67,7 @@ export class TasksService {
   }
 
   deleteTask(id: string): void {
-    this.tasks = this.tasks.filter((t) => t.id !== id);
+    const found = this.getTaskById(id);
+    this.tasks = this.tasks.filter((t) => t.id !== found.id);
   }
 }
